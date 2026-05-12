@@ -1,4 +1,4 @@
-import { alcoholOptionLabels, type GuestRecord } from "@/lib/mock-data";
+import { alcoholOptionLabels, type GuestRecord } from "@/lib/invitations";
 
 type GuestResponseCardProps = {
   guest: GuestRecord;
@@ -6,9 +6,14 @@ type GuestResponseCardProps = {
 
 export function GuestResponseCard({ guest }: GuestResponseCardProps) {
   return (
-    <article className="rounded-[28px] border border-[var(--color-border)] bg-[var(--color-surface-strong)] p-6 shadow-[var(--shadow-soft)] backdrop-blur-sm">
+    <article className="panel-hover relative overflow-hidden rounded-[28px] border border-[var(--color-border)] bg-[var(--color-surface-strong)] p-6 shadow-[var(--shadow-soft)] backdrop-blur-sm">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px overflow-hidden">
+        <div className="animate-shimmer-line h-px w-1/3 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.95),transparent)]" />
+      </div>
+      <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(189,22,22,0.18),transparent_68%)]" />
+
       <div className="flex items-start justify-between gap-4">
-        <div>
+        <div className="relative">
           <p className="text-xs font-medium uppercase tracking-[0.35em] text-[var(--color-primary)]">
             Анкета гостя
           </p>
@@ -25,14 +30,14 @@ export function GuestResponseCard({ guest }: GuestResponseCardProps) {
         </span>
       </div>
 
-      <div className="mt-6">
+      <div className="relative mt-6">
         <p className="text-sm font-medium text-[var(--color-text)]">Предпочтения по алкоголю</p>
         <div className="mt-3 flex flex-wrap gap-2">
           {guest.alcoholPreferences.length > 0 ? (
             guest.alcoholPreferences.map((option) => (
               <span
                 key={option}
-                className="rounded-full border border-[var(--color-border)] bg-white/70 px-3 py-2 text-sm text-[var(--color-text)]"
+                className="rounded-full border border-[var(--color-border)] bg-white/70 px-3 py-2 text-sm text-[var(--color-text)] shadow-[0_10px_30px_rgba(189,22,22,0.06)]"
               >
                 {alcoholOptionLabels[option]}
               </span>

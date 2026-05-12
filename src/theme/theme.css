@@ -9,6 +9,7 @@
   --color-border: rgba(189, 22, 22, 0.16);
   --color-accent: #8f0f0f;
   --color-gold: #b88a4a;
+  --color-rose: #d87a7a;
   --color-shadow: rgba(63, 24, 24, 0.12);
 
   --gradient-hero:
@@ -21,6 +22,7 @@
   --shadow-glow:
     0 0 0 1px rgba(189, 22, 22, 0.08),
     0 25px 60px rgba(189, 22, 22, 0.08);
+  --shadow-card-hover: 0 30px 80px rgba(76, 26, 26, 0.14);
 
   --font-sans-stack: "Inter", "SF Pro Text", "Segoe UI", sans-serif;
   --font-serif-stack: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;

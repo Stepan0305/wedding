@@ -319,6 +319,8 @@ Open questions:
 Progress notes:
 - 2026-05-11: Confirmed the implementation sequence, excluding a separate guest import feature from the first version.
 - 2026-05-11: Scaffolded the `Next.js` application, moved it into the project root, created the initial invitation/admin route structure, centralized theme variables in a dedicated theme file, and built the first placeholder invitation prototype.
+- 2026-05-11: Completed the first visual refinement pass for the invitation page: stronger hero composition, richer section styling, decorative motion via CSS, and more polished guest response cards.
+- 2026-05-11: Replaced mock invitation storage with a real `SQLite` layer using Node's built-in `node:sqlite`, added schema initialization and demo seed data, and switched invitation/admin reads to the database-backed repository.
 
 ---
 
@@ -378,6 +380,7 @@ Open questions:
 - 2026-05-09: We agreed to start with a high-level plan in Markdown and use it as the shared project tracker.
 - 2026-05-09: The website tone should combine modern visual design, ceremonial feeling, emotional presentation, and practical guest guidance.
 - 2026-05-11: Color management should be centralized from the beginning so the visual theme can be tuned without refactoring the UI.
+- 2026-05-11: If the git diff grows beyond 10 changed files or more than 2000 changed lines, I should commit and push at the end of the turn.
 
 ## Working Notes
 

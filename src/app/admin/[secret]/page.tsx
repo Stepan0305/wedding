@@ -1,4 +1,5 @@
-import { adminSecret, alcoholOptionLabels, getAllGuests } from "@/lib/mock-data";
+import { adminSecret, alcoholOptionLabels } from "@/lib/invitations";
+import { getAllGuests } from "@/lib/server/invitations-repository";
 
 type AdminPageProps = {
   params: Promise<{
