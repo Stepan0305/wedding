@@ -1,0 +1,27 @@
+:root {
+  --color-primary: #bd1616;
+  --color-background: #ebead6;
+  --color-background-elevated: #f6f3e4;
+  --color-surface: rgba(255, 255, 255, 0.58);
+  --color-surface-strong: rgba(255, 255, 255, 0.8);
+  --color-text: #271919;
+  --color-text-muted: rgba(39, 25, 25, 0.72);
+  --color-border: rgba(189, 22, 22, 0.16);
+  --color-accent: #8f0f0f;
+  --color-gold: #b88a4a;
+  --color-shadow: rgba(63, 24, 24, 0.12);
+
+  --gradient-hero:
+    radial-gradient(circle at top, rgba(189, 22, 22, 0.2), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.32));
+  --gradient-card:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.52));
+
+  --shadow-soft: 0 24px 70px rgba(63, 24, 24, 0.12);
+  --shadow-glow:
+    0 0 0 1px rgba(189, 22, 22, 0.08),
+    0 25px 60px rgba(189, 22, 22, 0.08);
+
+  --font-sans-stack: "Inter", "SF Pro Text", "Segoe UI", sans-serif;
+  --font-serif-stack: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+}
