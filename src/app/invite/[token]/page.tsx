@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { GuestResponseCard } from "@/components/invitation/guest-response-card";
+import { InvitationQuestionnaireSection } from "@/components/invitation/invitation-questionnaire-section";
 import { getInvitationByToken } from "@/lib/server/invitations-repository";
 import { siteContent } from "@/lib/site-content";
 
@@ -19,15 +19,16 @@ export default async function InvitationPage({ params }: InvitationPageProps) {
   }
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[var(--color-background)] text-[var(--color-text)]">
+    <main className="h-screen snap-y snap-mandatory overflow-y-auto overflow-x-hidden bg-[var(--color-background)] text-[var(--color-text)] overscroll-y-contain">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[42rem] bg-[var(--gradient-hero)]" />
       <div className="pointer-events-none absolute left-[-8rem] top-24 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(189,22,22,0.18),transparent_68%)] blur-2xl animate-float-slow" />
       <div className="pointer-events-none absolute right-[-4rem] top-16 h-96 w-96 rounded-full bg-[radial-gradient(circle,rgba(184,138,74,0.18),transparent_65%)] blur-3xl animate-float-delayed" />
       <div className="pointer-events-none absolute inset-x-0 top-[32rem] h-80 bg-[linear-gradient(180deg,transparent,rgba(255,255,255,0.45),transparent)]" />
 
-      <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-8 px-5 py-6 sm:px-8 lg:px-10">
-        <section className="overflow-hidden rounded-[32px] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-glow)] backdrop-blur-md">
-          <div className="grid gap-10 px-6 py-10 sm:px-8 lg:grid-cols-[1.18fr_0.82fr] lg:px-10 lg:py-12">
+      <div className="relative mx-auto flex w-full max-w-6xl flex-col px-5 sm:px-8 lg:px-10">
+        <section className="snap-stage py-5 sm:py-6">
+          <div className="snap-stage-inner overflow-hidden rounded-[32px] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-glow)] backdrop-blur-md">
+            <div className="grid gap-10 px-6 py-10 sm:px-8 lg:grid-cols-[1.18fr_0.82fr] lg:px-10 lg:py-12">
             <div>
               <p className="text-xs uppercase tracking-[0.45em] text-[var(--color-primary)]">
                 Свадебное приглашение
@@ -111,168 +112,126 @@ export default async function InvitationPage({ params }: InvitationPageProps) {
                 </div>
               </div>
             </div>
+            </div>
           </div>
         </section>
 
-        <section className="grid gap-8 lg:grid-cols-[1fr_0.9fr]">
-          <article className="panel-hover rounded-[32px] border border-[var(--color-border)] bg-[var(--gradient-card)] p-8 shadow-[var(--shadow-soft)]">
-            <p className="text-xs uppercase tracking-[0.35em] text-[var(--color-primary)]">
-              О дне
-            </p>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-[var(--color-text-muted)] text-balance">
-              {siteContent.story}
-            </p>
-            <div className="mt-8 grid gap-3 sm:grid-cols-2">
-              <div className="rounded-[22px] border border-[var(--color-border)] bg-white/65 p-5">
-                <p className="text-sm uppercase tracking-[0.3em] text-[var(--color-primary)]">
-                  Настроение
-                </p>
-                <p className="mt-3 text-base leading-7 text-[var(--color-text-muted)]">
-                  Мягкий свет, торжественность, любимые люди и ощущение большого красивого дня.
-                </p>
-              </div>
-              <div className="rounded-[22px] border border-[var(--color-border)] bg-white/65 p-5">
-                <p className="text-sm uppercase tracking-[0.3em] text-[var(--color-primary)]">
-                  Подача
-                </p>
-                <p className="mt-3 text-base leading-7 text-[var(--color-text-muted)]">
-                  Здесь удобно держать эмоцию и полезную информацию в одном спокойном ритме.
-                </p>
-              </div>
-            </div>
-          </article>
-
-          <article className="panel-hover rounded-[32px] border border-[var(--color-border)] bg-[var(--gradient-card)] p-8 shadow-[var(--shadow-soft)]">
-            <p className="text-xs uppercase tracking-[0.35em] text-[var(--color-primary)]">
-              Детали
-            </p>
-            <dl className="mt-6 space-y-5">
-              <div>
-                <dt className="text-sm text-[var(--color-text-muted)]">Дата и время</dt>
-                <dd className="mt-1 text-xl">{siteContent.eventDate + ", " + siteContent.eventTime}</dd>
-              </div>
-              <div>
-                <dt className="text-sm text-[var(--color-text-muted)]">Локация</dt>
-                <dd className="mt-1 text-xl">{siteContent.venueName}</dd>
-              </div>
-              <div>
-                <dt className="text-sm text-[var(--color-text-muted)]">Адрес</dt>
-                <dd className="mt-1 text-base leading-7 text-[var(--color-text)]">
-                  {siteContent.venueAddress}
-                </dd>
-              </div>
-            </dl>
-          </article>
-        </section>
-
-        <section className="rounded-[32px] border border-[var(--color-border)] bg-[var(--gradient-card)] p-8 shadow-[var(--shadow-soft)]">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <div>
+        <section className="snap-stage py-5 sm:py-6">
+          <div className="snap-stage-inner grid gap-8 lg:grid-cols-[1fr_0.9fr]">
+            <article className="panel-hover rounded-[32px] border border-[var(--color-border)] bg-[var(--gradient-card)] p-8 shadow-[var(--shadow-soft)]">
               <p className="text-xs uppercase tracking-[0.35em] text-[var(--color-primary)]">
-                Тайминг
+                О дне
               </p>
-              <h2 className="mt-4 text-3xl">Ритм свадебного дня</h2>
-            </div>
-            <p className="max-w-xl text-sm leading-7 text-[var(--color-text-muted)]">
-              Финальные времена и описания мы позже подменим на реальные. Пока этот блок
-              задает композицию и настроение страницы.
-            </p>
-          </div>
-
-          <div className="mt-8 grid gap-4 lg:grid-cols-4">
-            {siteContent.timeline.map((item, index) => (
-              <article
-                key={item.time + item.title}
-                className="panel-hover relative overflow-hidden rounded-[24px] border border-[var(--color-border)] bg-white/70 p-5"
-              >
-                <div className="absolute left-0 top-0 h-full w-px bg-[rgba(189,22,22,0.12)] lg:hidden" />
-                <div className="absolute inset-x-0 top-0 h-px overflow-hidden">
-                  <div className="animate-shimmer-line h-px w-1/3 bg-[linear-gradient(90deg,transparent,rgba(189,22,22,0.35),transparent)]" />
+              <p className="mt-5 max-w-2xl text-lg leading-8 text-[var(--color-text-muted)] text-balance">
+                {siteContent.story}
+              </p>
+              <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                <div className="rounded-[22px] border border-[var(--color-border)] bg-white/65 p-5">
+                  <p className="text-sm uppercase tracking-[0.3em] text-[var(--color-primary)]">
+                    Настроение
+                  </p>
+                  <p className="mt-3 text-base leading-7 text-[var(--color-text-muted)]">
+                    Мягкий свет, торжественность, любимые люди и ощущение большого красивого дня.
+                  </p>
                 </div>
-                <p className="text-sm uppercase tracking-[0.3em] text-[var(--color-primary)]">
-                  {String(index + 1).padStart(2, "0")} / {item.time}
-                </p>
-                <h3 className="mt-4 text-xl">{item.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-[var(--color-text-muted)]">
-                  {item.description}
-                </p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="grid gap-8 lg:grid-cols-[1fr_1fr]">
-          <article className="panel-hover rounded-[32px] border border-[var(--color-border)] bg-[var(--gradient-card)] p-8 shadow-[var(--shadow-soft)]">
-            <p className="text-xs uppercase tracking-[0.35em] text-[var(--color-primary)]">
-              Как добраться
-            </p>
-            <div className="mt-6 rounded-[24px] border border-[var(--color-border)] bg-white/70 p-6">
-              <div className="relative flex h-56 items-center justify-center overflow-hidden rounded-[18px] border border-dashed border-[var(--color-border)] bg-[rgba(189,22,22,0.05)] text-sm text-[var(--color-text-muted)]">
-                <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(189,22,22,0.08),transparent_42%,rgba(184,138,74,0.12))]" />
-                <div className="absolute inset-6 rounded-[16px] border border-white/60 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.45),transparent_38%),linear-gradient(135deg,rgba(255,255,255,0.52),rgba(255,255,255,0.18))]" />
-                <div className="relative text-center">
-                  <p>Здесь будет карта и кнопка построения маршрута</p>
-                  <p className="mt-3 text-xs uppercase tracking-[0.35em] text-[var(--color-primary)]">
-                    placeholder map
+                <div className="rounded-[22px] border border-[var(--color-border)] bg-white/65 p-5">
+                  <p className="text-sm uppercase tracking-[0.3em] text-[var(--color-primary)]">
+                    Подача
+                  </p>
+                  <p className="mt-3 text-base leading-7 text-[var(--color-text-muted)]">
+                    Здесь удобно держать эмоцию и полезную информацию в одном спокойном ритме.
                   </p>
                 </div>
               </div>
-              <p className="mt-5 text-sm leading-7 text-[var(--color-text-muted)]">
-                {siteContent.routeDetails}
-              </p>
-              <div className="mt-5 flex flex-wrap gap-3">
-                <div className="rounded-full border border-[var(--color-border)] bg-white/80 px-4 py-2 text-sm">
-                  Кнопка маршрута
-                </div>
-                <div className="rounded-full border border-[var(--color-border)] bg-white/80 px-4 py-2 text-sm">
-                  Адрес площадки
-                </div>
-              </div>
-            </div>
-          </article>
+            </article>
 
-          <article className="panel-hover rounded-[32px] border border-[var(--color-border)] bg-[var(--gradient-card)] p-8 shadow-[var(--shadow-soft)]">
-            <p className="text-xs uppercase tracking-[0.35em] text-[var(--color-primary)]">
-              Правила и пожелания
-            </p>
-            <div className="mt-6 grid gap-4">
-              <div className="rounded-[24px] border border-[var(--color-border)] bg-white/70 p-6">
-                <h3 className="text-xl">Дресс-код</h3>
-                <p className="mt-3 text-sm leading-7 text-[var(--color-text-muted)]">
-                  {siteContent.dressCode}
-                </p>
-              </div>
-              <div className="rounded-[24px] border border-[var(--color-border)] bg-white/70 p-6">
-                <h3 className="text-xl">Пожелания</h3>
-                <p className="mt-3 text-sm leading-7 text-[var(--color-text-muted)]">
-                  {siteContent.wishes}
-                </p>
-              </div>
-            </div>
-          </article>
+            <article className="panel-hover rounded-[32px] border border-[var(--color-border)] bg-[var(--gradient-card)] p-8 shadow-[var(--shadow-soft)]">
+              <p className="text-xs uppercase tracking-[0.35em] text-[var(--color-primary)]">
+                Детали
+              </p>
+              <dl className="mt-6 space-y-5">
+                <div>
+                  <dt className="text-sm text-[var(--color-text-muted)]">Дата</dt>
+                  <dd className="mt-1 text-xl">{siteContent.eventDate}</dd>
+                </div>
+                <div>
+                  <dt className="text-sm text-[var(--color-text-muted)]">Время сбора</dt>
+                  <dd className="mt-1 text-xl">{siteContent.eventTime}</dd>
+                </div>
+                <div>
+                  <dt className="text-sm text-[var(--color-text-muted)]">Локация</dt>
+                  <dd className="mt-1 text-xl">{siteContent.venueName}</dd>
+                </div>
+                <div>
+                  <dt className="text-sm text-[var(--color-text-muted)]">Адрес</dt>
+                  <dd className="mt-1 text-base leading-7 text-[var(--color-text)]">
+                    {siteContent.venueAddress}
+                  </dd>
+                </div>
+              </dl>
+            </article>
+          </div>
         </section>
 
-        <section className="rounded-[32px] border border-[var(--color-border)] bg-[var(--gradient-card)] p-8 shadow-[var(--shadow-soft)]">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <div>
+        <section className="snap-stage py-5 sm:py-6">
+          <div className="snap-stage-inner grid gap-8 lg:grid-cols-[1fr_1fr]">
+            <article className="panel-hover rounded-[32px] border border-[var(--color-border)] bg-[var(--gradient-card)] p-8 shadow-[var(--shadow-soft)]">
               <p className="text-xs uppercase tracking-[0.35em] text-[var(--color-primary)]">
-                Анкеты гостей
+                Как добраться
               </p>
-              <h2 className="mt-4 text-3xl">Персональные ответы внутри одного приглашения</h2>
-            </div>
-            <p className="max-w-xl text-sm leading-7 text-[var(--color-text-muted)]">
-              На следующем шаге мы заменим этот демонстрационный вид на реальную форму с
-              сохранением и редактированием данных.
-            </p>
-          </div>
+              <div className="mt-6 rounded-[24px] border border-[var(--color-border)] bg-white/70 p-6">
+                <div className="relative flex h-56 items-center justify-center overflow-hidden rounded-[18px] border border-dashed border-[var(--color-border)] bg-[rgba(189,22,22,0.05)] text-sm text-[var(--color-text-muted)]">
+                  <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(189,22,22,0.08),transparent_42%,rgba(184,138,74,0.12))]" />
+                  <div className="absolute inset-6 rounded-[16px] border border-white/60 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.45),transparent_38%),linear-gradient(135deg,rgba(255,255,255,0.52),rgba(255,255,255,0.18))]" />
+                  <div className="relative text-center">
+                    <p>Здесь будет карта и кнопка построения маршрута</p>
+                    <p className="mt-3 text-xs uppercase tracking-[0.35em] text-[var(--color-primary)]">
+                      placeholder map
+                    </p>
+                  </div>
+                </div>
+                <p className="mt-5 text-sm leading-7 text-[var(--color-text-muted)]">
+                  {siteContent.routeDetails}
+                </p>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <div className="rounded-full border border-[var(--color-border)] bg-white/80 px-4 py-2 text-sm">
+                    Кнопка маршрута
+                  </div>
+                  <div className="rounded-full border border-[var(--color-border)] bg-white/80 px-4 py-2 text-sm">
+                    Адрес площадки
+                  </div>
+                </div>
+              </div>
+            </article>
 
-          <div className="mt-8 grid gap-5 lg:grid-cols-3">
-            {invitation.guests
-              .slice()
-              .sort((left, right) => left.sortOrder - right.sortOrder)
-              .map((guest) => (
-                <GuestResponseCard key={guest.id} guest={guest} />
-              ))}
+            <article className="panel-hover rounded-[32px] border border-[var(--color-border)] bg-[var(--gradient-card)] p-8 shadow-[var(--shadow-soft)]">
+              <p className="text-xs uppercase tracking-[0.35em] text-[var(--color-primary)]">
+                Правила и пожелания
+              </p>
+              <div className="mt-6 grid gap-4">
+                <div className="rounded-[24px] border border-[var(--color-border)] bg-white/70 p-6">
+                  <h3 className="text-xl">Дресс-код</h3>
+                  <p className="mt-3 text-sm leading-7 text-[var(--color-text-muted)]">
+                    {siteContent.dressCode}
+                  </p>
+                </div>
+                <div className="rounded-[24px] border border-[var(--color-border)] bg-white/70 p-6">
+                  <h3 className="text-xl">Пожелания</h3>
+                  <p className="mt-3 text-sm leading-7 text-[var(--color-text-muted)]">
+                    {siteContent.wishes}
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section className="snap-stage py-5 sm:py-6">
+          <div className="snap-stage-inner">
+            <InvitationQuestionnaireSection
+              invitationToken={invitation.token}
+              guests={invitation.guests}
+            />
           </div>
         </section>
       </div>

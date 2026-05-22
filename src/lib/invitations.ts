@@ -10,6 +10,7 @@ export type GuestRecord = {
   id: number;
   name: string;
   sortOrder: number;
+  isAlcoholic: boolean;
   alcoholPreferences: AlcoholOption[];
   comment: string;
   isSubmitted: boolean;
@@ -29,6 +30,18 @@ export type InvitationGroup = {
 export type AdminGuestRecord = GuestRecord & {
   groupTitle: string;
   token: string;
+};
+
+export type SeedGuest = {
+  name: string;
+  sortOrder: number;
+  isAlcoholic: boolean;
+};
+
+export type SeedInvitationGroup = {
+  token: string;
+  title: string;
+  guests: SeedGuest[];
 };
 
 export const alcoholOptionLabels: Record<AlcoholOption, string> = {

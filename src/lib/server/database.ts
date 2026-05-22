@@ -2,7 +2,9 @@ import fs from "node:fs";
 import path from "node:path";
 import { DatabaseSync } from "node:sqlite";
 
-import type { AlcoholOption } from "@/lib/invitations";
+import seedGroups from "../../../seed/guest-groups.json";
+
+import type { AlcoholOption, SeedInvitationGroup } from "@/lib/invitations";
 
 const DATA_DIR = path.join(process.cwd(), "data");
 const DB_PATH = path.join(DATA_DIR, "wedding.sqlite");
@@ -24,6 +26,7 @@ type GuestRow = {
   group_id: number;
   name: string;
   sort_order: number;
+  is_alcoholic: number;
   alcohol_preferences: string;
   comment: string;
   is_submitted: number;
@@ -35,7 +38,7 @@ function ensureDatabaseFile() {
   fs.mkdirSync(DATA_DIR, { recursive: true });
 }
 
-function seedDatabase(database: DatabaseSync) {
+function seedDatabase(database: DatabaseSync, groups: SeedInvitationGroup[]) {
   const now = new Date().toISOString();
 
   const insertGroup = database.prepare(`
@@ -43,68 +46,38 @@ function seedDatabase(database: DatabaseSync) {
     VALUES (?, ?, ?, ?)
   `);
 
-  const groupResult = insertGroup.run("demo", "Анна, Дмитрий и София", now, now);
-  const groupId = Number(groupResult.lastInsertRowid);
-
   const insertGuest = database.prepare(`
     INSERT INTO guests (
       group_id,
       name,
       sort_order,
+      is_alcoholic,
       alcohol_preferences,
       comment,
       is_submitted,
       submitted_at,
       updated_at
     )
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
 
-  const guests: Array<{
-    name: string;
-    sortOrder: number;
-    alcoholPreferences: AlcoholOption[];
-    comment: string;
-    isSubmitted: boolean;
-    submittedAt: string | null;
-  }> = [
-    {
-      name: "Анна",
-      sortOrder: 1,
-      alcoholPreferences: ["champagne", "cocktails"],
-      comment: "С радостью буду с вами. Если что-то изменится, напишу лично.",
-      isSubmitted: true,
-      submittedAt: "2026-05-11T16:45:00.000Z",
-    },
-    {
-      name: "Дмитрий",
-      sortOrder: 2,
-      alcoholPreferences: ["strong_alcohol"],
-      comment: "",
-      isSubmitted: true,
-      submittedAt: "2026-05-11T17:10:00.000Z",
-    },
-    {
-      name: "София",
-      sortOrder: 3,
-      alcoholPreferences: [],
-      comment: "",
-      isSubmitted: false,
-      submittedAt: null,
-    },
-  ];
+  for (const group of groups) {
+    const groupResult = insertGroup.run(group.token, group.title, now, now);
+    const groupId = Number(groupResult.lastInsertRowid);
 
-  for (const guest of guests) {
-    insertGuest.run(
-      groupId,
-      guest.name,
-      guest.sortOrder,
-      JSON.stringify(guest.alcoholPreferences),
-      guest.comment,
-      guest.isSubmitted ? 1 : 0,
-      guest.submittedAt,
-      guest.submittedAt ?? now,
-    );
+    for (const guest of group.guests) {
+      insertGuest.run(
+        groupId,
+        guest.name,
+        guest.sortOrder,
+        guest.isAlcoholic ? 1 : 0,
+        JSON.stringify([] satisfies AlcoholOption[]),
+        "",
+        0,
+        null,
+        now,
+      );
+    }
   }
 }
 
@@ -126,6 +99,7 @@ function initializeDatabase(database: DatabaseSync) {
       group_id INTEGER NOT NULL,
       name TEXT NOT NULL,
       sort_order INTEGER NOT NULL DEFAULT 0,
+      is_alcoholic INTEGER NOT NULL DEFAULT 1,
       alcohol_preferences TEXT NOT NULL DEFAULT '[]',
       comment TEXT NOT NULL DEFAULT '',
       is_submitted INTEGER NOT NULL DEFAULT 0,
@@ -138,12 +112,25 @@ function initializeDatabase(database: DatabaseSync) {
     CREATE INDEX IF NOT EXISTS invitation_groups_token_idx ON invitation_groups(token);
   `);
 
+  const guestColumns = database.prepare("PRAGMA table_info(guests)").all() as Array<{
+    name: string;
+  }>;
+
+  const hasIsAlcoholic = guestColumns.some((column) => column.name === "is_alcoholic");
+
+  if (!hasIsAlcoholic) {
+    database.exec(`
+      ALTER TABLE guests
+      ADD COLUMN is_alcoholic INTEGER NOT NULL DEFAULT 1
+    `);
+  }
+
   const groupCountRow = database
     .prepare("SELECT COUNT(*) AS count FROM invitation_groups")
     .get() as { count: number };
 
   if (groupCountRow.count === 0) {
-    seedDatabase(database);
+    seedDatabase(database, seedGroups as SeedInvitationGroup[]);
   }
 }
 
@@ -174,6 +161,7 @@ export function mapGuestRow(row: GuestRow) {
     id: row.id,
     name: row.name,
     sortOrder: row.sort_order,
+    isAlcoholic: Boolean(row.is_alcoholic),
     alcoholPreferences: JSON.parse(row.alcohol_preferences) as AlcoholOption[],
     comment: row.comment,
     isSubmitted: Boolean(row.is_submitted),

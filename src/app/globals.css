@@ -83,6 +83,18 @@ select {
   box-shadow: var(--shadow-card-hover);
 }
 
+.snap-stage {
+  min-height: 100svh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  align-items: center;
+}
+
+.snap-stage-inner {
+  width: 100%;
+}
+
 @keyframes float-slow {
   0%,
   100% {

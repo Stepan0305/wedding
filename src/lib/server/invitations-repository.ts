@@ -27,6 +27,7 @@ export function getInvitationByToken(token: string): InvitationGroup | null {
           group_id,
           name,
           sort_order,
+          is_alcoholic,
           alcohol_preferences,
           comment,
           is_submitted,
@@ -55,6 +56,7 @@ export function getAllGuests(): AdminGuestRecord[] {
           guests.group_id,
           guests.name,
           guests.sort_order,
+          guests.is_alcoholic,
           guests.alcohol_preferences,
           guests.comment,
           guests.is_submitted,
@@ -79,4 +81,71 @@ export function getAllGuests(): AdminGuestRecord[] {
     groupTitle: row.group_title,
     token: row.token,
   }));
+}
+
+export function updateGuestResponse(input: {
+  token: string;
+  guestId: number;
+  alcoholPreferences: string[];
+  comment: string;
+}) {
+  const database = getDatabase();
+
+  const guestRow = database
+    .prepare(
+      `
+        SELECT
+          guests.id,
+          guests.is_alcoholic,
+          invitation_groups.token AS token
+        FROM guests
+        INNER JOIN invitation_groups ON invitation_groups.id = guests.group_id
+        WHERE guests.id = ?
+      `,
+    )
+    .get(input.guestId) as
+    | {
+        id: number;
+        is_alcoholic: number;
+        token: string;
+      }
+    | undefined;
+
+  if (!guestRow) {
+    return { ok: false as const, reason: "not_found" as const };
+  }
+
+  if (guestRow.token !== input.token) {
+    return { ok: false as const, reason: "forbidden" as const };
+  }
+
+  if (!guestRow.is_alcoholic) {
+    return { ok: false as const, reason: "not_applicable" as const };
+  }
+
+  const now = new Date().toISOString();
+  const normalizedComment = input.comment.trim();
+
+  database
+    .prepare(
+      `
+        UPDATE guests
+        SET
+          alcohol_preferences = ?,
+          comment = ?,
+          is_submitted = 1,
+          submitted_at = COALESCE(submitted_at, ?),
+          updated_at = ?
+        WHERE id = ?
+      `,
+    )
+    .run(
+      JSON.stringify(input.alcoholPreferences),
+      normalizedComment,
+      now,
+      now,
+      input.guestId,
+    );
+
+  return { ok: true as const };
 }

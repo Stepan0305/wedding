@@ -1,3 +1,4 @@
+import { CopyLinkButton } from "@/components/admin/copy-link-button";
 import { adminSecret, alcoholOptionLabels } from "@/lib/invitations";
 import { getAllGuests } from "@/lib/server/invitations-repository";
 
@@ -40,6 +41,7 @@ export default async function AdminPage({ params }: AdminPageProps) {
     label,
     total: guests.reduce(
       (count, guest) =>
+        guest.isAlcoholic &&
         guest.alcoholPreferences.includes(key as keyof typeof alcoholOptionLabels)
           ? count + 1
           : count,
@@ -87,6 +89,7 @@ export default async function AdminPage({ params }: AdminPageProps) {
                 <tr className="bg-[rgba(189,22,22,0.06)] text-left text-sm text-[var(--color-text-muted)]">
                   <th className="px-5 py-4 font-medium">Группа</th>
                   <th className="px-5 py-4 font-medium">Гость</th>
+                  <th className="px-5 py-4 font-medium">Анкета</th>
                   <th className="px-5 py-4 font-medium">Статус</th>
                   <th className="px-5 py-4 font-medium">Алкоголь</th>
                   <th className="px-5 py-4 font-medium">Комментарий</th>
@@ -101,23 +104,51 @@ export default async function AdminPage({ params }: AdminPageProps) {
                         <p className="mt-1 text-xs text-[var(--color-text-muted)]">
                           /invite/{guest.token}
                         </p>
+                        <a
+                          href={`/invite/${guest.token}`}
+                          className="mt-3 inline-flex items-center rounded-full border border-[var(--color-border)] bg-white px-3 py-2 text-xs font-medium text-[var(--color-primary)] transition hover:border-[var(--color-primary)] hover:bg-[rgba(189,22,22,0.06)]"
+                        >
+                          Открыть приглашение
+                        </a>
+                        <div className="mt-2">
+                          <CopyLinkButton href={`/invite/${guest.token}`} />
+                        </div>
                       </div>
                     </td>
                     <td className="border-t border-[var(--color-border)] px-5 py-4">{guest.name}</td>
                     <td className="border-t border-[var(--color-border)] px-5 py-4">
                       <span
                         className={`rounded-full px-3 py-1 text-xs font-medium ${
-                          guest.isSubmitted
+                          guest.isAlcoholic
+                            ? "bg-[rgba(184,138,74,0.18)]"
+                            : "bg-[rgba(39,25,25,0.08)] text-[var(--color-text-muted)]"
+                        }`}
+                      >
+                        {guest.isAlcoholic ? "Показывается" : "Скрыта"}
+                      </span>
+                    </td>
+                    <td className="border-t border-[var(--color-border)] px-5 py-4">
+                      <span
+                        className={`rounded-full px-3 py-1 text-xs font-medium ${
+                          !guest.isAlcoholic
+                            ? "bg-[rgba(39,25,25,0.08)] text-[var(--color-text-muted)]"
+                            : guest.isSubmitted
                             ? "bg-[rgba(184,138,74,0.18)]"
                             : "bg-[rgba(189,22,22,0.08)] text-[var(--color-primary)]"
                         }`}
                       >
-                        {guest.isSubmitted ? "Заполнено" : "Нет ответа"}
+                        {!guest.isAlcoholic
+                          ? "Не требуется"
+                          : guest.isSubmitted
+                            ? "Заполнено"
+                            : "Нет ответа"}
                       </span>
                     </td>
                     <td className="border-t border-[var(--color-border)] px-5 py-4">
                       <div className="flex min-w-48 flex-wrap gap-2">
-                        {guest.alcoholPreferences.length > 0 ? (
+                        {!guest.isAlcoholic ? (
+                          <span className="text-sm text-[var(--color-text-muted)]">Не применяется</span>
+                        ) : guest.alcoholPreferences.length > 0 ? (
                           guest.alcoholPreferences.map((option) => (
                             <span
                               key={option}
