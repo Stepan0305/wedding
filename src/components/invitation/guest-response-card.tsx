@@ -84,7 +84,7 @@ export function GuestResponseCard({
   }
 
   return (
-    <article className="panel-hover relative overflow-hidden rounded-[28px] border border-[var(--color-border)] bg-[var(--color-surface-strong)] p-6 shadow-[var(--shadow-soft)] backdrop-blur-sm">
+    <article className="panel-hover glass-panel relative overflow-hidden rounded-[28px] border border-[var(--color-border)] bg-[var(--color-surface-strong)] p-6 shadow-[var(--shadow-soft)]">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px overflow-hidden">
         <div className="animate-shimmer-line h-px w-1/3 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.95),transparent)]" />
       </div>
@@ -100,7 +100,7 @@ export function GuestResponseCard({
         <span
           className={`rounded-full px-3 py-1 text-xs font-medium ${
             !showAlcoholForm
-              ? "bg-[rgba(39,25,25,0.08)] text-[var(--color-text-muted)]"
+              ? "bg-[rgba(255,255,255,0.34)] text-[var(--color-text-muted)]"
               : guest.isSubmitted
               ? "bg-[rgba(184,138,74,0.18)] text-[var(--color-text)]"
               : "bg-[rgba(189,22,22,0.08)] text-[var(--color-primary)]"
@@ -134,7 +134,7 @@ export function GuestResponseCard({
                       className={`rounded-full border px-3 py-2 text-sm transition ${
                         isSelected
                           ? "border-[var(--color-primary)] bg-[rgba(189,22,22,0.12)] text-[var(--color-primary)]"
-                          : "border-[var(--color-border)] bg-white/70 text-[var(--color-text)] shadow-[0_10px_30px_rgba(189,22,22,0.06)]"
+                          : "border-[var(--color-border)] bg-[rgba(255,255,255,0.34)] text-[var(--color-text)] shadow-[0_10px_30px_rgba(89,112,153,0.1)]"
                       }`}
                     >
                       {label}
@@ -157,7 +157,7 @@ export function GuestResponseCard({
                 disabled={isPending}
                 onChange={(event) => setComment(event.target.value)}
                 rows={4}
-                className="mt-3 w-full resize-none rounded-[20px] border border-[var(--color-border)] bg-white/75 px-4 py-3 text-sm leading-7 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]"
+                className="glass-panel mt-3 w-full resize-none rounded-[20px] border border-[var(--color-border)] bg-[rgba(255,255,255,0.32)] px-4 py-3 text-sm leading-7 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]"
                 placeholder="Здесь можно оставить дополнительный комментарий"
               />
             </div>
@@ -183,7 +183,7 @@ export function GuestResponseCard({
         ) : (
           <>
             <p className="text-sm font-medium text-[var(--color-text)]">Анкета</p>
-            <div className="mt-3 rounded-[20px] border border-[var(--color-border)] bg-white/70 px-4 py-4 text-sm leading-7 text-[var(--color-text-muted)]">
+            <div className="glass-panel mt-3 rounded-[20px] border border-[var(--color-border)] bg-[rgba(255,255,255,0.32)] px-4 py-4 text-sm leading-7 text-[var(--color-text-muted)]">
               Для этого гостя алкогольная анкета не показывается.
             </div>
           </>

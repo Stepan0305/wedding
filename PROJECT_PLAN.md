@@ -108,6 +108,7 @@ Progress notes:
 - 2026-05-11: Confirmed that the design should feel effectful and ceremonial, with polished premium animations and possible selective 3D presentation.
 - 2026-05-11: Confirmed initial color direction with a deep red primary (`#bd1616`) and a warm light background (`#EDEBD7`). Also agreed that theme colors must be centralized in a separate file/config for easy iteration.
 - 2026-05-11: Confirmed the emotional tone as romantic and airy rather than strict or severe.
+- 2026-05-28: Started a new luxury visual direction pass focused on an editorial hero reference rather than incremental template edits. Target references: champagne, pearl, soft gold, glass, engraving, soft cinematic light, and selective 3D.
 
 ---
 
@@ -120,28 +121,12 @@ Goal:
 Notes:
 - Likely one-page invitation site with a personalized flow.
 - There will be no separate public landing page.
-- Possible sections: hero, story, event details, gallery, location, how to get there, rules, RSVP/questionnaire.
-- Decide whether the questionnaire lives on the same page or a separate step.
-- Confirmed sections:
-  - hero section with names, date, and visual atmosphere
-  - greeting / short message to guests
-  - emotional story or "we are waiting for you" block
-  - event details: date, time, venue
-  - map and route guidance
-  - wedding day timeline
-  - dress code / rules / wishes
-  - personalized guest questionnaire
-  - RSVP and alcohol preferences
 - Photo gallery is not needed.
-- Confirmed page order:
-  1. hero section
-  2. greeting to guests
-  3. emotional story / atmosphere block
-  4. event details
-  5. wedding day timeline
-  6. map and route guidance
-  7. dress code / rules / wishes
-  8. personalized questionnaire block
+- Updated mobile-first scene structure:
+  1. names of the couple, names of the invited guests, and a message inviting them to the wedding
+  2. date, guest arrival time, countdown timer, and route guidance
+  3. questionnaire section
+  4. FAQ section
 
 Open questions:
 - None at this stage.
@@ -149,6 +134,7 @@ Open questions:
 Progress notes:
 - 2026-05-11: Confirmed a one-page invitation flow with emotional sections first, then practical information, then the personalized guest questionnaire.
 - 2026-05-11: Confirmed that the project does not need a separate public homepage; the website exists only as personalized invitation pages plus an admin view.
+- 2026-05-21: Reframed the invitation into 4 full-screen mobile-first scenes: invitation hero, event details with countdown and route guidance, questionnaire, and FAQ.
 
 ---
 

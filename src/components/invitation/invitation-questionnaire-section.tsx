@@ -30,7 +30,7 @@ export function InvitationQuestionnaireSection({
   }
 
   return (
-    <section className="rounded-[32px] border border-[var(--color-border)] bg-[var(--gradient-card)] p-8 shadow-[var(--shadow-soft)]">
+    <section className="glass-panel rounded-[32px] border border-[var(--color-border)] bg-[var(--gradient-card)] p-8 shadow-[var(--shadow-soft)]">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-xs uppercase tracking-[0.35em] text-[var(--color-primary)]">
@@ -56,7 +56,7 @@ export function InvitationQuestionnaireSection({
               className={`rounded-full border px-4 py-3 text-sm font-medium transition ${
                 isSelected
                   ? "border-[var(--color-primary)] bg-[rgba(189,22,22,0.12)] text-[var(--color-primary)]"
-                  : "border-[var(--color-border)] bg-white/75 text-[var(--color-text)] hover:border-[var(--color-primary)] hover:bg-[rgba(189,22,22,0.06)]"
+                  : "border-[var(--color-border)] bg-[rgba(255,255,255,0.34)] text-[var(--color-text)] hover:border-[var(--color-primary)] hover:bg-[rgba(189,22,22,0.06)]"
               }`}
             >
               {guest.name}
