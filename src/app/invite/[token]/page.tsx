@@ -1,8 +1,9 @@
+import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { InvitationCountdown } from "@/components/invitation/invitation-countdown";
 import { InvitationQuestionnaireSection } from "@/components/invitation/invitation-questionnaire-section";
-import { LuxuryHero } from "@/components/invitation/luxury-hero";
+import { MemoryCameraScene } from "@/components/invitation/memory-camera-scene";
 import { getInvitationByToken } from "@/lib/server/invitations-repository";
 import { siteContent } from "@/lib/site-content";
 
@@ -55,13 +56,57 @@ export default async function InvitationPage({ params }: InvitationPageProps) {
 
       <div className="relative mx-auto w-full max-w-6xl">
         <SceneSection>
-          <LuxuryHero
-            guestTitle={invitation.title}
-            coupleNames="Степан & Елизавета"
-            eventDate={siteContent.eventDate}
-            eventTime={siteContent.eventTime}
-            venueName={siteContent.venueName}
-          />
+          <MemoryCameraScene />
+        </SceneSection>
+
+        <SceneSection>
+          <section className="story-scene story-scene-curtain-closed">
+            <div className="curtain-frame">
+              <Image
+                src="/images/references/curtain-reference-closed.png"
+                alt="Закрытые шторы"
+                fill
+                className="object-cover"
+                sizes="100vw"
+              />
+            </div>
+          </section>
+        </SceneSection>
+
+        <SceneSection>
+          <section className="story-scene story-scene-hero-reveal">
+            <div className="curtain-frame curtain-frame-open">
+              <Image
+                src="/images/references/curtain-reference-open.png"
+                alt="Открывающиеся шторы"
+                fill
+                className="object-cover"
+                sizes="100vw"
+              />
+            </div>
+
+            <div className="hero-reveal-shell">
+              <div className="hero-reveal-copy">
+                <p className="story-kicker">Свадебное приглашение</p>
+                <h2 className="hero-reveal-title">Степан & Елизавета</h2>
+                <p className="hero-reveal-message">
+                  {invitation.title}, приглашаем вас на свою свадьбу
+                </p>
+              </div>
+
+              <div className="hero-reveal-photo-wrap">
+                <div className="hero-reveal-photo">
+                  <Image
+                    src="/images/couple-hero.jpg"
+                    alt="Степан и Елизавета"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 56vw"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
         </SceneSection>
 
         <SceneSection>
