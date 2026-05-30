@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 
 import { InvitationCountdown } from "@/components/invitation/invitation-countdown";
 import { InvitationQuestionnaireSection } from "@/components/invitation/invitation-questionnaire-section";
-import { MemoryCameraScene } from "@/components/invitation/memory-camera-scene";
 import { getInvitationByToken } from "@/lib/server/invitations-repository";
 import { siteContent } from "@/lib/site-content";
 
@@ -56,54 +55,50 @@ export default async function InvitationPage({ params }: InvitationPageProps) {
 
       <div className="relative mx-auto w-full max-w-6xl">
         <SceneSection>
-          <MemoryCameraScene />
-        </SceneSection>
+          <section className="grid min-h-[calc(100svh-4rem)] gap-6 lg:grid-cols-[0.92fr_1.08fr]">
+            <article className="panel-hover glass-panel flex flex-col justify-center rounded-[32px] border border-[var(--color-border)] bg-[var(--gradient-card)] p-8 shadow-[var(--shadow-soft)] lg:p-10">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[var(--color-primary)]">
+                Свадебное приглашение
+              </p>
+              <h1 className="mt-5 max-w-[10ch] text-5xl leading-[0.92] sm:text-6xl lg:text-7xl">
+                Степан & Елизавета
+              </h1>
+              <p className="mt-6 max-w-xl text-lg leading-8 text-[var(--color-text-muted)]">
+                {invitation.title}, приглашаем вас на свою свадьбу.
+              </p>
 
-        <SceneSection>
-          <section className="story-scene story-scene-curtain-closed">
-            <div className="curtain-frame">
-              <Image
-                src="/images/references/curtain-reference-closed.png"
-                alt="Закрытые шторы"
-                fill
-                className="object-cover"
-                sizes="100vw"
-              />
-            </div>
-          </section>
-        </SceneSection>
-
-        <SceneSection>
-          <section className="story-scene story-scene-hero-reveal">
-            <div className="curtain-frame curtain-frame-open">
-              <Image
-                src="/images/references/curtain-reference-open.png"
-                alt="Открывающиеся шторы"
-                fill
-                className="object-cover"
-                sizes="100vw"
-              />
-            </div>
-
-            <div className="hero-reveal-shell">
-              <div className="hero-reveal-copy">
-                <p className="story-kicker">Свадебное приглашение</p>
-                <h2 className="hero-reveal-title">Степан & Елизавета</h2>
-                <p className="hero-reveal-message">
-                  {invitation.title}, приглашаем вас на свою свадьбу
-                </p>
-              </div>
-
-              <div className="hero-reveal-photo-wrap">
-                <div className="hero-reveal-photo">
-                  <Image
-                    src="/images/couple-hero.jpg"
-                    alt="Степан и Елизавета"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 56vw"
-                  />
+              <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                <div className="glass-panel rounded-[24px] border border-[var(--color-border)] bg-[rgba(255,255,255,0.36)] p-5">
+                  <p className="text-xs uppercase tracking-[0.3em] text-[var(--color-primary)]">
+                    Дата
+                  </p>
+                  <p className="mt-4 text-xl">{siteContent.eventDate}</p>
                 </div>
+                <div className="glass-panel rounded-[24px] border border-[var(--color-border)] bg-[rgba(255,255,255,0.36)] p-5">
+                  <p className="text-xs uppercase tracking-[0.3em] text-[var(--color-primary)]">
+                    Сбор гостей
+                  </p>
+                  <p className="mt-4 text-xl">{siteContent.eventTime}</p>
+                </div>
+                <div className="glass-panel rounded-[24px] border border-[var(--color-border)] bg-[rgba(255,255,255,0.36)] p-5">
+                  <p className="text-xs uppercase tracking-[0.3em] text-[var(--color-primary)]">
+                    Локация
+                  </p>
+                  <p className="mt-4 text-xl">{siteContent.venueName}</p>
+                </div>
+              </div>
+            </article>
+
+            <div className="flex items-center justify-center">
+              <div className="relative aspect-[0.88] w-full max-w-[34rem] overflow-hidden rounded-[8rem_8rem_2rem_2rem] border border-white/50 bg-white/30 shadow-[0_28px_80px_rgba(147,114,73,0.22)]">
+                <Image
+                  src="/images/couple-hero.jpg"
+                  alt="Степан и Елизавета"
+                  fill
+                  priority
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 48vw"
+                />
               </div>
             </div>
           </section>
